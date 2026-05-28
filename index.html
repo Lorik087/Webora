@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webora</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #070b14;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(136, 75, 255, 0.22), transparent 32%),
+        radial-gradient(circle at 85% 20%, rgba(85, 120, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(120, 70, 255, 0.14), transparent 35%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    nav {
+      width: 100%;
+      padding: 24px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      background: rgba(7, 11, 20, 0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 23px;
+      letter-spacing: 0.2px;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #9b5cff, #5d7cff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 34px rgba(139, 92, 246, 0.45);
+      font-weight: 900;
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #d8d8e6;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: #a970ff;
+    }
+
+    .nav-button {
+      padding: 13px 22px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #9b5cff, #6e4dff);
+      color: #ffffff !important;
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.35);
+    }
+
+    section {
+      padding: 105px 7%;
+      scroll-margin-top: 90px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      padding-top: 160px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 9px 17px;
+      border-radius: 999px;
+      color: #caa9ff;
+      background: rgba(155, 92, 255, 0.1);
+      border: 1px solid rgba(155, 92, 255, 0.25);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #b889ff, #7b61ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #b7b8c9;
+      font-size: 20px;
+      max-width: 620px;
+      margin-bottom: 34px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 26px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: 0.25s;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, #9b5cff, #6f4dff);
+      color: #ffffff;
+      box-shadow: 0 15px 35px rgba(139, 92, 246, 0.35);
+    }
+
+    .button-secondary {
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .button:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.08);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .screen-card {
+      min-height: 430px;
+      border-radius: 32px;
+      padding: 28px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        radial-gradient(circle at 70% 30%, rgba(155, 92, 255, 0.32), transparent 34%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.42);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen-top {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 35px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .mock-title {
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 900;
+      max-width: 420px;
+      margin-bottom: 18px;
+    }
+
+    .mock-text {
+      color: #c8c9d8;
+      max-width: 430px;
+      margin-bottom: 28px;
+    }
+
+    .mock-button {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: #9b5cff;
+      color: white;
+      font-weight: 800;
+    }
+
+    .floating-box {
+      position: absolute;
+      right: -15px;
+      bottom: -20px;
+      width: 210px;
+      padding: 24px;
+      border-radius: 26px;
+      background: rgba(10, 13, 25, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    }
+
+    .floating-box strong {
+      display: block;
+      font-size: 28px;
+      color: #b889ff;
+      margin-bottom: 4px;
+    }
+
+    .floating-box span {
+      color: #b7b8c9;
+      font-size: 14px;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: -45px;
+      padding: 30px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+    }
+
+    .trust-item {
+      padding: 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .trust-item:last-child {
+      border-right: none;
+    }
+
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      border-radius: 16px;
+      background: rgba(155, 92, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      width: 26px;
+      height: 26px;
+      stroke: #9b5cff;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .trust-item h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .trust-item p {
+      color: #aeb0c2;
+      font-size: 15px;
+    }
+
+    .section-title {
+      max-width: 780px;
+      margin-bottom: 58px;
+    }
+
+    .section-title.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .small-title {
+      color: #a970ff;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 18px;
+    }
+
+    .section-title p {
+      color: #aeb0c2;
+      font-size: 18px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      padding: 34px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.078);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.26);
+    }
+
+    .service-card h3 {
+      font-size: 23px;
+      margin: 18px 0 12px;
+    }
+
+    .service-card p {
+      color: #aeb0c2;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .profile-card {
+      padding: 36px;
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)),
+        radial-gradient(circle at 30% 10%, rgba(155, 92, 255, 0.24), transparent 40%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-height: 470px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .profile-image {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(155, 92, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 26px;
+      color: #b889ff;
+      font-size: 70px;
+      font-weight: 900;
+    }
+
+    .profile-card h3 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .profile-card p {
+      color: #aeb0c2;
+      font-size: 17px;
+    }
+
+    .about-text p {
+      color: #aeb0c2;
+      margin-bottom: 18px;
+      font-size: 18px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .info-list div {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: #d7d8e6;
+      font-weight: 700;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      counter-reset: step;
+    }
+
+    .process-card {
+      padding: 30px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .process-card::before {
+      counter-increment: step;
+      content: "0" counter(step);
+      display: block;
+      color: #9b5cff;
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .process-card h3 {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .process-card p {
+      color: #aeb0c2;
+      font-size: 15px;
+    }
+
+    .contact-box {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 52px;
+      border-radius: 36px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
+        radial-gradient(circle at 75% 20%, rgba(155, 92, 255, 0.2), transparent 38%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: center;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.32);
+    }
+
+    .contact-box p {
+      color: #aeb0c2;
+      font-size: 18px;
+      max-width: 720px;
+      margin: 0 auto 30px;
+    }
+
+    .contact-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin: 34px auto;
+      max-width: 720px;
+    }
+
+    .contact-link {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 34px 7%;
+      color: #aeb0c2;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 1050px) {
+      .hero,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-item:nth-child(2) {
+        border-right: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        padding: 18px 6%;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      section,
+      .hero {
+        padding-left: 6%;
+        padding-right: 6%;
+      }
+
+      .hero {
+        padding-top: 135px;
+      }
+
+      .services-grid,
+      .process-grid,
+      .trust-strip,
+      .contact-links {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .trust-item:last-child {
+        border-bottom: none;
+      }
+
+      .screen-card {
+        min-height: 360px;
+      }
+
+      .floating-box {
+        position: static;
+        margin-top: 24px;
+        width: 100%;
+      }
+
+      .contact-box {
+        padding: 34px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="#start">
+      <span class="logo-mark">W</span>
+      <span>Webora</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#start">Startseite</a></li>
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#ueber-mich">Über mich</a></li>
+      <li><a href="#ablauf">Ablauf</a></li>
+      <li><a href="#kontakt" class="nav-button">Jetzt anfragen</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="start">
+    <div>
+      <span class="tag">Webdesign, das überzeugt</span>
+      <h1>Moderne Webseiten, die <span class="gradient-text">Vertrauen</span> schaffen.</h1>
+      <p>Ich erstelle übersichtliche, moderne und professionelle Webseiten für kleine Unternehmen, Selbstständige und Projekte, die online besser wirken möchten.</p>
+      <div class="button-row">
+        <a class="button button-primary" href="#kontakt">Jetzt anfragen</a>
+        <a class="button button-secondary" href="#leistungen">Mehr erfahren</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="screen-card">
+        <div class="screen-top">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="mock-title">Ein starker Online Auftritt für Ihr Business.</div>
+        <div class="mock-text">Klarer Aufbau, schönes Design und eine Webseite, die auf Handy und Computer gut aussieht.</div>
+        <span class="mock-button">Projekt starten</span>
+        <div class="floating-box">
+          <strong>100%</strong>
+          <span>Zuverlässigkeit, saubere Arbeit und ehrliche Kommunikation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="trust-strip">
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H4z"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+        <h3>Modernes Design</h3>
+        <p>Ihre Webseite soll professionell, sauber und hochwertig wirken.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-8"/><path d="M14 7h6v6"/></svg></div>
+        <h3>Klare Struktur</h3>
+        <p>Besucher finden schnell, was wichtig ist.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.4 7.8-8 9-4.6-1.2-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-5"/></svg></div>
+        <h3>Vertrauen</h3>
+        <p>Ein seriöser Auftritt hilft Kunden bei der Entscheidung.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 10-13h-7l0-7z"/></svg></div>
+        <h3>Zuverlässigkeit</h3>
+        <p>Klare Absprachen, saubere Umsetzung und faire Kommunikation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="leistungen">
+    <div class="section-title center">
+      <div class="small-title">Leistungen</div>
+      <h2>Was ich für Ihre Webseite mache</h2>
+      <p>Ich helfe dabei, aus einer Idee eine moderne Webseite zu machen, die professionell aussieht und einfach verständlich ist.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M8 13h3"/><path d="M8 16h8"/></svg></div>
+        <h3>Webseiten Design</h3>
+        <p>Ich gestalte moderne Webseiten, die gut aussehen und zur Firma oder Person passen.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12c.8.7 1 1.4 1 2h6c0-.6.2-1.3 1-2a7 7 0 0 0-4-12z"/></svg></div>
+        <h3>Texte und Aufbau</h3>
+        <p>Ich helfe bei einfachen und klaren Texten, damit Kunden sofort verstehen, worum es geht.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h3>Handy Ansicht</h3>
+        <p>Die Webseite wird so aufgebaut, dass sie auch auf dem Handy sauber und professionell aussieht.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M12 4v16"/><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg></div>
+        <h3>Verbesserungen</h3>
+        <p>Wenn schon eine Webseite vorhanden ist, kann ich das Design übersichtlicher und schöner machen.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
+        <h3>Landingpages</h3>
+        <p>Eine einzelne, starke Seite für Angebote, Dienstleistungen oder den ersten Eindruck einer Firma.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div>
+        <h3>Persönlicher Kontakt</h3>
+        <p>Sie können Wünsche, Änderungen und Ideen direkt mit mir besprechen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="ueber-mich">
+    <div class="profile-card">
+      <div class="profile-image">?</div>
+      <h3>Lorik Morina</h3>
+      <p>Webdesign und moderne Webseiten</p>
+      <div class="info-list">
+        <div>Name: Lorik Morina</div>
+        <div>Ort: Wohlen AG</div>
+        <div>Email: lorik.morina97@outlook.com</div>
+        <div>Telefon: +41 76 214 35 26</div>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <div class="small-title">Über mich</div>
+      <h2>Ich erstelle Webseiten mit Sorgfalt und einem klaren Ziel.</h2>
+      <p>Ich heisse Lorik Morina und bin Schüler im Gymnasium. Seit rund drei Jahren beschäftige ich mich mit Webdesign, modernen Webseiten und klaren Online Auftritten.</p>
+      <p>Mir ist wichtig, dass eine Webseite nicht nur schön aussieht, sondern auch verständlich ist. Kunden sollen schnell erkennen, was angeboten wird und wie sie Kontakt aufnehmen können.</p>
+      <p>Ich arbeite zuverlässig, offen und ehrlich. Ich nehme mir Zeit für jedes Projekt, höre genau zu und suche Lösungen, die professionell wirken und zum jeweiligen Unternehmen passen.</p>
+      <div class="button-row">
+        <a class="button button-primary" href="#kontakt">Kontakt aufnehmen</a>
+        <a class="button button-secondary" href="#ablauf">Ablauf ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="ablauf">
+    <div class="section-title center">
+      <div class="small-title">Ablauf</div>
+      <h2>So läuft ein Projekt ab</h2>
+      <p>Ein einfacher Ablauf sorgt dafür, dass Sie wissen, was passiert und wie die Webseite Schritt für Schritt entsteht.</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-card">
+        <h3>Erstes Gespräch</h3>
+        <p>Wir klären, was Sie brauchen, welche Inhalte wichtig sind und wie die Webseite wirken soll.</p>
+      </div>
+      <div class="process-card">
+        <h3>Vorschau</h3>
+        <p>Ich erstelle eine erste moderne Vorschau, damit Sie sehen, in welche Richtung es geht.</p>
+      </div>
+      <div class="process-card">
+        <h3>Anpassungen</h3>
+        <p>Farben, Texte, Bilder und Bereiche werden nach Wunsch verbessert und angepasst.</p>
+      </div>
+      <div class="process-card">
+        <h3>Übergabe</h3>
+        <p>Nach der Fertigstellung erhalten Sie die Webseite und können sie online verwenden.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="contact-box">
+      <div class="small-title">Kontakt</div>
+      <h2>Bereit für eine moderne Webseite?</h2>
+      <p>Schreiben Sie mir kurz, was Sie brauchen. Ich melde mich und kann Ihnen erklären, wie eine passende Webseite für Ihr Projekt aussehen könnte.</p>
+
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:lorik.morina97@outlook.com">lorik.morina97@outlook.com</a>
+        <a class="contact-link" href="tel:+41762143526">+41 76 214 35 26</a>
+      </div>
+
+      <a class="button button-primary" href="mailto:lorik.morina97@outlook.com">Jetzt Email schreiben</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Webora. Moderne Webseiten mit Vertrauen und Zuverlässigkeit.</p>
+  </footer>
+</body>
+</html>
